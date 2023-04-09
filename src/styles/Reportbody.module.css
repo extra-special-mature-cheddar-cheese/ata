@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');
+
+.header1 {
+  font-family: var(--font-default);
+  font-size: var(--font-large);
+  color: var(--text-color);
+  border-radius: 50%;
+  margin: 0;
+}
+
+.iocontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.smalltext {
+  font-family: var(--font-default);
+  font-size: var(--font-small);
+  color: var(--colour-gray-2);
+  border-radius: 50%;
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.method {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.methodscontainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 3rem;
+}
+
+.mapcontainer {
+  display: flex;
+  background-image: url("/bgsrings.png");
+  height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-size: auto;
+}
+
+.methodsvg {
+  width: 7rem;
+  height: 7rem;
+}
