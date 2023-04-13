@@ -85,7 +85,7 @@ function Stage3(props) {
     .catch(error => {
       console.error(error);
     });
-  }, [sendData, setLoading, setData]);
+  }, []);
 
   // calculate points client side
   let basePoints, distanceBonus, totalPoints
