@@ -19,7 +19,6 @@ export default function handler(req, res) {
     usersCollection.countDocuments({
         uid: id
     }).then((docs) => {
-        console.log(docs)
         if (docs > 0) {
             usersCollection.findOne({
                 uid: id

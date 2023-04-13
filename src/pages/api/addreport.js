@@ -32,8 +32,6 @@ export default function handler(req, res) {
 
     totalPoints = basePoints + distanceBonus
 
-    console.log(totalPoints)
-
     // add new points to user and form with mongodb
 
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
