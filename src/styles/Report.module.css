@@ -1,21 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap');
 
-.idinput {
-  background-color: var(--colour-gray-1);
-  font-family: var(--font-default);
-  font-size: var(--font-regular);
-  color: var(--text-color);
-  border-radius: 1rem;
-  border: none !important;
-  padding: var(--font-xsmall);
-  margin-top: var(--font-small);
-  margin-bottom: var(--font-small);
-}
-
-.idinput:focus {
-  border: none !important;
-}
-
 .header1 {
   font-family: var(--font-default);
   font-size: var(--font-large);
@@ -30,4 +14,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.btnprimary {
+  font-size: var(--font-regular);
+  background-color: var(--colour-gray-1);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 1rem;
 }

@@ -1,5 +1,5 @@
 import styles from '@/styles/Reportbody.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Stage1(props) {
   let setStage = props.setstage
@@ -7,17 +7,14 @@ function Stage1(props) {
   function bike() {
     setStage(2);
     setMethod("bike")
-    console.log("bike")
   }
   function walk() {
     setStage(2);
     setMethod("walk")
-    console.log("walk")
   }
   function pubtrans() {
     setStage(2);
-    setMethod("pubtrans")
-    console.log("public transport")
+    setMethod("public transport")
   }
   return (
     <div className={styles.iocontainer}>
@@ -43,32 +40,107 @@ function Stage1(props) {
 
 function Stage2(props) {
   let setStage = props.setstage
-  let setMethod = props.setmethod
+  let setZone = props.setzone
   return (
     <div className={styles.mapcontainer}>
-      {props.method}
+      <h1 className={styles.header1}>What zone did your journey start in?</h1>
+      <div className={styles.zones}>
+        <h3 style={{backgroundColor: "rgba(34, 240, 41, 0.5)"}} className={styles.zone} onClick={() => {setZone(1); setStage(3)}}>Green</h3>
+        <h3 style={{backgroundColor: "rgba(240, 236, 34, 0.5)"}} className={styles.zone} onClick={() => {setZone(2); setStage(3)}}>Yellow</h3>
+        <h3 style={{backgroundColor: "rgba(240, 65, 65, 0.5)"}} className={styles.zone} onClick={() => {setZone(3); setStage(3)}}>Red</h3>
+        <h3 style={{backgroundColor: "rgba(141, 65, 240, 0.5)"}} className={styles.zone} onClick={() => {setZone(4); setStage(3)}}>Purple</h3>
+        <h3 style={{backgroundColor: "rgba(128, 128, 128, 0.5)"}} className={styles.zone} onClick={() => {setZone(5); setStage(3)}}>None</h3>
+      </div>
     </div>
   )
 }
 
 function Stage3(props) {
-  let setStage = props.setstage
-  let setMethod = props.setmethod
+
+  let [loading, setLoading] = useState(true)
+  let [data, setData] = useState(null)
+  
+  let sendData = {
+    id: props.id,
+    method: props.method,
+    zone: props.zone
+  }
+
+  useEffect(() => {
+
+    let url = window.location.protocol + "//" + window.location.host + "/api/addreport"
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendData)
+    })
+    .then(response => response.json())
+    .then(response => {
+      setData(response);
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, [sendData, setLoading, setData]);
+
+  // calculate points client side
+  let basePoints, distanceBonus, totalPoints
+  if (props.method == "public transport") {
+    basePoints = 2
+  }
+  if (props.method == "walk" || props.method == "bike") {
+    basePoints = 5
+  }
+
+  basePoints = basePoints * props.zone
+  distanceBonus = props.zone
+  if (props.method == "walk" || props.method == "bike") {
+    distanceBonus = Math.round(distanceBonus * 1.5)
+  }
+
+  if (props.method == "public transport" && props.zone == 8) {
+    distanceBonus = distanceBonus + 3
+  }
+
+  totalPoints = basePoints + distanceBonus
+
+
+  if (loading || !data) {
+    return (
+      <div className={styles.resultscontainer}>
+        <h1 className={styles.header1}>loading results...</h1>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.resultscontainer}>
-      
+      <h1 className={styles.header1}>Points gained</h1>
+      <p className={styles.resulttext}>{basePoints}</p>
+      <p className={styles.resulttextsmall}>{props.method}</p>
+      <p className={styles.resulttext}>{distanceBonus}</p>
+      <p className={styles.resulttextsmall}>distance bonus</p>
+      <hr className={styles.resulthr} />
+      <p className={styles.resulttext}>{totalPoints}</p>
+      <p className={styles.resulttextsmall}>total points</p>
+      <p className={styles.totalpointsp}>you have <span className={styles.totalpointsnewbold}>{data.pointsnew}</span> total points in the competition</p>
     </div>
   )
 }
 
 export default function ReportBody(props) {
-  let [method, setMethod] = useState("pigon")
+  let [method, setMethod] = useState(null)
   let [stage, setStage] = useState(1)
+  let [zone, setZone] = useState(null)
   return (
     <>
       {stage == 1 && <Stage1 name={props.name} setmethod={setMethod} setstage={setStage} />}
-      {stage == 2 && <Stage2 setmethod={setMethod} setstage={setStage} method={method} />}
-      {stage == 3 && <Stage3 name={props.name} method={method} />}
+      {stage == 2 && <Stage2 setstage={setStage} setzone={setZone}/>}
+      {stage == 3 && <Stage3 name={props.name} method={method} zone={zone} id={props.id}/>}
     </>
   )
 }

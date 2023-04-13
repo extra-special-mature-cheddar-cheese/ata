@@ -2,11 +2,10 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 
 export default function Home() {
-  'use client'
   let logIn = () => {
     let id = document.getElementById("id-input").value
     if (id) {
-      window.location = "http://localhost:3000/report/" + id
+      window.location = window.location.protocol + "//" + window.location.host + "/report/" + id
     }
   }
   return (
