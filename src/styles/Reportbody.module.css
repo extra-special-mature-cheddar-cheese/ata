@@ -40,6 +40,7 @@
 }
 
 .mapcontainer {
+  padding-top: 1rem;
   display: flex;
   background-image: url("/bgsrings.png");
   height: 100%;
@@ -47,7 +48,7 @@
   background-position: center center;
   background-size: auto;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
@@ -63,6 +64,7 @@
   text-align: center;
   border-radius: 0.5rem;
   backdrop-filter: blur(0.1rem);
+  margin: 0;
 }
 
 .zones {
