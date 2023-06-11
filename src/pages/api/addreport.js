@@ -50,7 +50,7 @@ export default function handler(req, res) {
         zone: zone
     }
 
-    journeysCollection.insertOne(journey)
+    journeysCollection.insertOne(journey).then(() => {
 
     // find user in user collection
 
@@ -76,7 +76,7 @@ export default function handler(req, res) {
             $set: {
                 points: userPoints + totalPoints
             }
-        }, {})
+        }, {}).then(() => {
 
         // find form (8ed 🔛🔝)
 
@@ -94,8 +94,8 @@ export default function handler(req, res) {
                 $set: {
                     points: form.points + totalPoints
                 }
-            }, {}).then(res.status(200).send({pointsnew: newpoints}))
-        })
+            }, {}).then(() => {res.status(200).send({pointsnew: newpoints})}).then(() => {client.close()})
+        })})
         
-    })
+    })})
 }
