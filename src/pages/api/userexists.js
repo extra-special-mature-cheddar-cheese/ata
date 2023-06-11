@@ -30,9 +30,11 @@ export default function handler(req, res) {
                     isAdmin = true
                 }
                 let name = doc.name
+                client.close()
                 res.status(200).send({exists: true, isAdmin: isAdmin, name: name})
             })
         } else {
+            client.close()
             res.status(404).send({exists: false})
         }
     })
