@@ -94,7 +94,7 @@ export default function handler(req, res) {
                 $set: {
                     points: form.points + totalPoints
                 }
-            }, {}).then(res.status(200).send({pointsnew: newpoints})).then(client.close())
+            }, {}).then(res.status(200).send({pointsnew: newpoints}))
         })
         
     })
